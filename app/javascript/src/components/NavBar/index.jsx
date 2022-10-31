@@ -10,6 +10,8 @@ const NavBar = () => (
           <div className="hidden lg:flex">
             <NavItem name="Todos" path="/" />
             <NavItem iconClass="ri-add-fill" name="Add" path="/tasks/create" />
+            <NavItem name="Todos" path="/dashboard" />
+            <NavItem iconClass="ri-add-fill" name="Add" path="/tasks/create" />
           </div>
         </div>
         <div className="flex items-center justify-end">

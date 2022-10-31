@@ -3,7 +3,7 @@ import React from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 
-import NavBar from "components/NavBar";
+import NavBar from "./NavBar";
 
 const Container = ({ children, className = "" }) => (
   <>

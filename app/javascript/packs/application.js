@@ -1,19 +1,21 @@
+/* eslint no-console:0 */
+/* global require */
 // This file is automatically compiled by Webpack, along with any other files
 // present in this directory. You're encouraged to place your actual application logic in
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
-
-import Rails from "@rails/ujs";
-import * as ActiveStorage from "@rails/activestorage";
-import "channels";
+//
+// To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 import "../stylesheets/application.scss";
+// layout file, like app/views/layouts/application.html.erb
 
 import "stylesheets/application";
 
-Rails.start();
-ActiveStorage.start();
 // Support component names relative to this directory:
-var componentRequireContext = require.context("components", true);
-var ReactRailsUJS = require("react_ujs");
+const componentRequireContext = require.context("src", true);
+const ReactRailsUJS = require("react_ujs");
+
+// Makes React dev tools etc, work.
 ReactRailsUJS.mountComponents();
+
 ReactRailsUJS.useContext(componentRequireContext);
