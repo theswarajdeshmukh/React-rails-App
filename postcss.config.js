@@ -8,5 +8,11 @@ module.exports = {
       },
       stage: 3,
     }),
+    require("tailwindcss")("./tailwind.config.js"),
+    require("autoprefixer"),
   ],
 };
+
+// In simple terms postcss or post processing our CSS, takes our existing CSS and extends it,
+// as opposed to preprocessors which use functions and variables to help write our CSS in a much more efficient,
+// manageable way.
