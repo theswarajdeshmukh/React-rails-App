@@ -27,6 +27,16 @@ class Task < ApplicationRecord
       end
     end
 end
+# We make use of column_name_changed? attribute method provided by ActiveModel::Dirty module.
+# It provides a way to track changes in our object in the same way as Active Record does. In simpler terms,
+# if we need to know if a particular database column has changed in database level,
+# then we can make use of these methods.
+
+# self is a Ruby keyword that gives you access to the current object. Here, it will be the current task.
+
+# persisted? is a Ruby method, part of ActiveRecord::Persistence, which returns true if the record is persisted, i.e. it's not a new record and it was not destroyed, and otherwise returns false.
+
+# So, here slug_changed? && self.persisted? is ensuring that slug has changed as well as persisted.
 
 # set_slug method is setting slug attribute as a parameterized version of the title. When doing so,
 # if the same slug already exists in the database, we use an iterator and append it to the end of the slug,
