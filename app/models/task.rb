@@ -10,21 +10,53 @@ class Task < ApplicationRecord
 
   private
 
+    # def set_slug
+    #   itr = 1
+    #   loop do
+    #     title_slug = title.parameterize
+    #     slug_candidate = itr > 1 ? "#{title_slug}-#{itr}" : title_slug
+    #     break self.slug = slug_candidate unless Task.exists?(slug: slug_candidate)
+
+    #     itr += 1
+    #   end
+    # end
+
+    # One solution here is to use the LIKE operator from SQLite to query all tasks with a matching slug.
+    # Once we have a list of all such tasks, we can append an integer value greater than the count of such tasks to
+    # parameterized task title. This will produce a unique slug.
+
+    # def set_slug
+    #   title_slug = title.parameterize
+    #   latest_task_slug = Task.where(
+    #     "slug LIKE ? or slug LIKE ?",
+    #     "#{title_slug}",
+    #     "#{title_slug}-%"
+    #   ).order("LENGTH(slug) DESC", slug: :desc).first&.slug
+    #   slug_count = 0
+    #   if latest_task_slug.present?
+    #     slug_count = latest_task_slug.split("-").last.to_i
+    #     only_one_slug_exists = slug_count == 0
+    #     slug_count = 1 if only_one_slug_exists
+    #   end
+    #   slug_candidate = slug_count.positive? ? "#{title_slug}-#{slug_count + 1}" : title_slug
+    #   self.slug = slug_candidate
+    # end
+
     def set_slug
-      itr = 1
-      loop do
-        title_slug = title.parameterize
-        slug_candidate = itr > 1 ? "#{title_slug}-#{itr}" : title_slug
-        break self.slug = slug_candidate unless Task.exists?(slug: slug_candidate)
-
-        itr += 1
+      title_slug = title.parameterize
+      regex_pattern = "slug #{Constants::DB_REGEX_OPERATOR} ?"
+      latest_task_slug = Task.where(
+        regex_pattern,
+        "#{title_slug}$|#{title_slug}-[0-9]+$"
+      ).order("LENGTH(slug) DESC", slug: :desc).first&.slug
+      slug_count = 0
+      if latest_task_slug.present?
+        slug_count = latest_task_slug.split("-").last.to_i
+        only_one_slug_exists = slug_count == 0
+        slug_count = 1 if only_one_slug_exists
       end
-    end
-
-    def slug_not_changed
-      if slug_changed? && self.persisted?
-        errors.add(:slug, t("task.slug.immutable"))
-      end
+      slug_candidate = slug_count.positive? ? "#{title_slug}-#{slug_count + 1}" : title_slug
+      self.slug = slug_candidate
     end
 end
 # We make use of column_name_changed? attribute method provided by ActiveModel::Dirty module.
