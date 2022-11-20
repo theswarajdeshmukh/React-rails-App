@@ -12,6 +12,8 @@ const App = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    initializeLogger();
+    registerIntercepts();
     /*eslint no-undef: "off"*/
     // initializeLogger();
     setAuthHeaders(setLoading);
