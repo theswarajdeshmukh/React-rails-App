@@ -68,16 +68,4 @@ class ApplicationController < ActionController::Base
   def respond_with_json(json = {}, status = :ok)
     render status: status, json: json
   end
-
-  private
-
-    def respond_with_error(error, status = :unprocessable_entity, context = {})
-      error_message = error
-      is_exception = error.kind_of?(StandardError)
-      if is_exception
-        is_having_record = error.methods.include? "record"
-        error_message = is_having_record ? error.record.errors_to_sentence : error.message
-      end
-      render status: status, json: { error: error_message }.merge(context)
-    end
 end

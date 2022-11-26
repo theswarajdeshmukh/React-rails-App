@@ -58,6 +58,12 @@ class Task < ApplicationRecord
       slug_candidate = slug_count.positive? ? "#{title_slug}-#{slug_count + 1}" : title_slug
       self.slug = slug_candidate
     end
+
+    def slug_not_changed
+      if slug_changed? && self.persisted?
+        errors.add(:slug, "is immutable!")
+      end
+    end
 end
 # We make use of column_name_changed? attribute method provided by ActiveModel::Dirty module.
 # It provides a way to track changes in our object in the same way as Active Record does. In simpler terms,

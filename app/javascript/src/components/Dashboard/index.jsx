@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 
 import { isNil, isEmpty, either } from "ramda";
 
-import tasksApi from "../../apis/tasks";
-import Container from "../Container";
-import PageLoader from "../PageLoader";
-import Table from "../Tasks/Table";
+import tasksApi from "apis/tasks";
+import Container from "components/Container";
+import PageLoader from "components/PageLoader";
+import Table from "components/Tasks/Table";
 
-const Dashboard = () => {
+const Dashboard = ({ history }) => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -22,6 +22,10 @@ const Dashboard = () => {
       logger.error(error);
       setLoading(false);
     }
+  };
+
+  const showTask = slug => {
+    history.push(`/tasks/${slug}/show`);
   };
 
   useEffect(() => {
@@ -48,7 +52,7 @@ const Dashboard = () => {
 
   return (
     <Container>
-      <Table data={tasks} />
+      <Table data={tasks} showTask={showTask} />
     </Container>
   );
 };
