@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
-  before_action :load_task!, only: %i[show update]
+  before_action :load_task!, only: %i[show update destroy]
 
   # Note that, we have used a bang operator with the load_task! method name because the
   # method will return an exception n case a task is not found. It is a Ruby convention
@@ -25,6 +25,11 @@ class TasksController < ApplicationController
     task = Task.new(task_params)
     task.save!
     respond_with_success(t("successfully_created"))
+  end
+
+  def destroy
+    @task.destroy!
+    respond_with_json
   end
 
   private
