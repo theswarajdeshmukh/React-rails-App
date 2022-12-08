@@ -20,7 +20,7 @@ const TableRow = ({ data, destroyTask, showTask }) => (
           className="whitespace-no-wrap px-6 py-4 text-sm
             font-medium leading-5 text-gray-900"
         >
-          {rowData.assigned_user.name}
+          {rowData.assigned_user?.name}
         </td>
         <td className="cursor-pointer px-6 py-4 text-right text-sm font-medium leading-5">
           <a className="text-bb-purple" onClick={() => showTask(rowData.slug)}>

@@ -13,7 +13,7 @@ class TasksController < ApplicationController
   end
 
   def show
-    respond_with_json({ task: @task, assigned_user: @task.assigned_user })
+    render
   end
 
   def update
