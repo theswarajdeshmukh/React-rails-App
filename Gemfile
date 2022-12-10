@@ -58,3 +58,5 @@ gem "react-rails"
 # For code formatting and linting
 gem "rubocop"
 gem "rubocop-rails"
+
+gem "bcrypt", "~> 3.1.13"
