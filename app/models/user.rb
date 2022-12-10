@@ -6,6 +6,10 @@ class User < ApplicationRecord
 
   has_many :assigned_tasks, foreign_key: :assigned_user_id, class_name: "Task"
   has_secure_password
+  # has_secure_password line adds some convenience methods to the User class.
+  # These methods help in storing password in an encrypted form and also authenticate the plain
+  # text password with the stored encrypted password
+  has_secure_token :authentication_token
 
   validates :name, presence: true, length: { maximum: 35 }
   validates :email, presence: true,
