@@ -60,3 +60,5 @@ gem "rubocop"
 gem "rubocop-rails"
 
 gem "bcrypt", "~> 3.1.13"
+
+gem "simplecov", require: false, group: :test
