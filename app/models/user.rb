@@ -2,7 +2,9 @@
 
 class User < ApplicationRecord
   has_many :created_tasks, foreign_key: :task_owner_id, class_name: "Task"
+  has_many :comments, dependent: :destroy
   before_destroy :assign_tasks_to_task_owners
+
   VALID_EMAIL_REGEX = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i.freeze
   MAX_EMAIL_LENGTH = 255
 
